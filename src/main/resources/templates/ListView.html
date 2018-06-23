@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<title>商品一覧</title>
+		<link rel="stylesheet" type="text/css" href="ShoppingSite.css">
+	</head>
+
+	<body>
+		<div th:if="${message} != null">
+			<span class="message" th:text="${message}"></span><br />
+		</div>
+
+		<h2>商品一覧</h2>
+
+		<div class="btn-toolbar">
+
+				<form method="post" action="#" th:action="@{/CartView}" th:object="${listForm}">
+					<input type='submit' value='カート' class='submit' />
+				</form>
+				<br />
+				<form method="post" action="#" th:action="@{/PurchaseConfirm}" th:object="${listForm}">
+					<input type='submit' value='購入確認へ' class='submit' />
+				</form>
+
+		</div>
+
+		<div></div>
+		<br />
+
+		<div>
+			<form method="post" action="#" th:action="@{/ListView}" th:object="${listForm}">
+				<table class="list" border="1" align="center">
+					<tr>
+						<th width="10%">No.</th>
+						<th width="40%">商品名</th>
+						<th width="15%">価格</th>
+						<th width="15%">個数</th>
+						<th width="20%">購入</th>
+					</tr>
+
+					<tr th:each="item, stat: ${items}">
+						<!-- <td th:text="${item.id}" th:field="${listForm.itemId}" th:value="${item.itemId}"></td> -->
+						<td>
+							<span th:text="${item.itemId}"></span>
+							<input type="hidden" th:name="itemIdList[__${stat.index}__]" th:value="${item.itemId}" />
+						</td>
+						<td th:text="${item.itemName}"></td>
+						<td th:text="'\\' + ${item.price}"></td>
+						<td>
+							<!-- <select th:name="num"> -->
+							<select th:field="${listForm.nums[__${stat.index}__]}">
+								<option value='1'>1</option>
+								<option value='2'>2</option>
+								<option value='3'>3</option>
+								<option value='4'>4</option>
+								<option value='5'>5</option>
+								<option value='6'>6</option>
+								<option value='7'>7</option>
+								<option value='8'>8</option>
+								<option value='9'>9</option>
+								<option value='10'>10</option>
+							</select>個
+						</td>
+						<td>
+							<button type="submit" name="addOrderIndex" th:value="${stat.index}">カートに追加</button>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</body>
+</html>

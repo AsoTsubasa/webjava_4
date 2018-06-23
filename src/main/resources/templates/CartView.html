@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<title>カート</title>
+		<link rel="stylesheet" type="text/css" href="ShoppingSite.css">
+	</head>
+
+	<body>
+		<h2>カートの中身</h2>
+
+		<form method="post" action="#" th:object="${listForm}">
+			<table class="list"  border="1" align="center">
+				<tr>
+					<th>No.</th>
+					<th>商品名</th>
+					<th>価格</th>
+					<th>個数</th>
+					<th>削除</th>
+				</tr>
+				<th:block th:each="order: ${cart.orderList}">
+					<tr>
+						<td th:text="${order.item.itemId}"></td>
+						<td th:text="${order.item.itemName}"></td>
+						<td th:text="'\\' + ${order.item.price}"></td>
+						<td th:text="${order.num}"></td>
+						<td>
+							<a href="" th:href="@{/DeleteOrder(item_id=${order.item.itemId})}">削除</a>
+						</td>
+					</tr>
+				</th:block>
+			</table>
+		</form>
+
+		<br />
+
+		<form method="get" action="#" th:action="@{/ListView}" th:object="${listForm}">
+			<input type='submit' value='商品一覧に戻る' class='submit' />
+		</form>
+
+		<br />
+
+		<form method="post" action="#" th:action="@{/PurchaseConfirm}" th:object="${listForm}">
+			<input type='submit' value='購入確認へ' class='submit' />
+		</form>
+
+	</body>
+</html>
