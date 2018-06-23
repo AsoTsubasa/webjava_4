@@ -1,0 +1,10 @@
+table{
+	align: center;
+	text-align: center;
+	width: 90%;
+
+}
+
+div.btn-toolbar{
+	display: inline-flex;
+}
