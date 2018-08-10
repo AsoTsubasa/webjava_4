@@ -8,3 +8,7 @@ table{
 div.btn-toolbar{
 	display: inline-flex;
 }
+
+#title_h2{
+	display: inline;
+}

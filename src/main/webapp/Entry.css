@@ -1,0 +1,19 @@
+form ul li {
+	list-style: none;
+
+}
+
+label {
+	margin-right: 10px;
+	width:150px;
+	float: left;
+}
+
+input #button {
+	display: block;
+	margin: 0 auto;
+}
+
+div {
+	
+}

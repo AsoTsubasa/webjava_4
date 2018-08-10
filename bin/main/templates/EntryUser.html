@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title>新規ユーザ登録画面</title>
+	<link rel="stylesheet" type="text/css" href="Entry.css">
+</head>
+
+<body>
+	<th:block th:if="${errMsg}">
+		<th:block th:each="str, stat : ${errMsg.split('\r\n|\r|\n', -1)}">
+			<span th:text="${str}" style="color:#ff0000;"></span>
+			<br th:if="${!stat.last}" />
+		</th:block>
+	</th:block>
+
+	<!--
+	<div th:if="${errMsg} != null">
+		<span class="errMsg" th:text="${errMsg}" style="color:#ff0000;"></span><br />
+	</div>
+	 -->
+	<h2>新規ユーザ登録</h2>
+
+
+		<form method="post" action="#" th:action="@{/EntryUser}" th:object="${entryUserForm}">
+			<ul>
+				<li class="user_id">
+					<label for="user_id">ユーザID</label>
+					<input type="text" th:field="${entryUserForm.userId}">
+				</li>
+				<li class="user_name">
+					<label for="user_name">ユーザ名</label>
+					<input type="text" th:field="${entryUserForm.userName}">
+				</li>
+				<li class="password">
+					<label for="password">パスワード</label>
+					<input type="password" th:field="${entryUserForm.password}">
+				</li>
+				<li class="validation_pass">
+					<label for="validation_pass">(確認用)パスワード</label>
+					<input type="password" th:field="${entryUserForm.validationPass}">
+				</li>
+				<br />
+				<li>
+					<input id="button" type='submit' value='登録' class='submit' />
+				</li>
+			</ul>
+
+
+			<div>
+
+			</div>
+			<br />
+		</form>
+
+		<form method="get" action="#" th:action="@{/Login}">
+			<input type='submit' value='ログイン画面に戻る' class='submit' />
+		</form>
+
+</body>

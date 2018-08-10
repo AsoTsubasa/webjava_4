@@ -28,7 +28,7 @@ public class ListService {
 
   }
 
-  // 商品IDから商品情報を取得
+  // 商品IDを指定して商品情報を取得
   public Item findItemById(int itemId)
   {
     // SQL文
@@ -41,8 +41,14 @@ public class ListService {
     // 指定した商品IDをもつ商品情報（1件）を取得
     List<Item> list = npJdbcTemplate.query(commandText, param, new BeanPropertyRowMapper<Item>(Item.class));
 
-    return list.get(0);
-
+    if(list.size() > 0)
+    {
+      return list.get(0);
+    }
+    else
+    {
+      return null;
+    }
   }
 
   // DBから商品情報を取得

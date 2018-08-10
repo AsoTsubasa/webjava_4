@@ -16,6 +16,7 @@ import jp.co.systena.tigerscave.ShoppingSite.application.model.Item;
 import jp.co.systena.tigerscave.ShoppingSite.application.model.ListForm;
 import jp.co.systena.tigerscave.ShoppingSite.application.model.ListService;
 import jp.co.systena.tigerscave.ShoppingSite.application.model.Order;
+import jp.co.systena.tigerscave.ShoppingSite.application.model.User;
 
 @Controller
 public class ListController {
@@ -29,31 +30,47 @@ public class ListController {
   @RequestMapping(value="/ListView", method = RequestMethod.GET)
   public ModelAndView show(ModelAndView mav)
   {
+    // ユーザ情報を取得
+    User user = (User)session.getAttribute("user");
+
+    // ユーザ情報が取得できない場合は、ログイン画面に遷移
+    if(user == null)
+    {
+      return new ModelAndView("redirect:/Login");
+    }
+    else
+    {
+      // ユーザ情報をオブジェクトに格納
+      mav.addObject("user", user);
+    }
+
+    // メッセージを取得して、オブジェクトに格納
     String message = (String) session.getAttribute("message");
     session.removeAttribute("message");
-
-    Cart cart = (Cart)session.getAttribute("cart");
-    if(cart == null) {
-        cart = new Cart();
-        session.setAttribute("cart", cart);
-    }
 
     if(message != null && !message.isEmpty())
     {
       mav.addObject("message", message);
     }
 
-
+    // 商品リストを取得して、オブジェクトに格納
     List<Item> itemList = listService.getItemList();
     mav.addObject("items", itemList);
 
-    ListForm listForm = new ListForm();
 
+    // カート情報を取得。カートが無い場合は、新規作成
+    Cart cart = (Cart)session.getAttribute("cart");
+    if(cart == null) {
+        cart = new Cart();
+        session.setAttribute("cart", cart);
+    }
+
+
+    ListForm listForm = new ListForm();
     listForm.setItemIdList(new int[itemList.size()]);
     listForm.setNums(new int[itemList.size()]);
-
-
     mav.addObject("listForm", listForm);
+
     return mav;
 
   }
@@ -109,5 +126,5 @@ public class ListController {
     // リダイレクト
     return new ModelAndView("redirect:/ListView");
   }
-  
+
 }

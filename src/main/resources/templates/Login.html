@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title>ログイン画面</title>
+	<link rel="stylesheet" type="text/css" href="Entry.css">
+</head>
+
+<body>
+	<div th:if="${message} != null">
+		<span class="message" th:text="${message}"></span><br />
+	</div>
+	<div th:if="${errMsg} != null">
+		<span class="errMsg" th:text="${errMsg}" style="color:#ff0000;"></span><br />
+	</div>
+	<h2>ログイン画面</h2>
+
+	<div>
+		<form method="post" action="#" th:action="@{/Login}" th:object="${loginForm}">
+			<ul>
+				<li>
+					<label>ユーザID  </label>
+					<input type="text" th:field="${loginForm.userId}">
+				</li>
+				<li>
+					<label>パスワード</label>
+					<input type="password" th:field="${loginForm.password}">
+				</li>
+				<br />
+				<li>
+					<input type='submit' value='サインイン' class='submit' />
+				</li>
+			</ul>
+		</form>
+		<br/>
+		<form method="get" action="#" th:action="@{/EntryUser}">
+			<input type='submit' value='新規登録' class='submit' />
+		</form>
+	</div>
+</body>

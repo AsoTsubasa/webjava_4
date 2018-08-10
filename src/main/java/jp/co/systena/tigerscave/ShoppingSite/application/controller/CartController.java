@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import jp.co.systena.tigerscave.ShoppingSite.application.model.Cart;
+import jp.co.systena.tigerscave.ShoppingSite.application.model.User;
 
 @Controller
 public class CartController
@@ -21,6 +22,20 @@ public class CartController
   @RequestMapping(value="/CartView", method = RequestMethod.GET)
   public ModelAndView show(ModelAndView mav)
   {
+    // ユーザ情報を取得
+    User user = (User)session.getAttribute("user");
+
+    // ユーザ情報が取得できない場合は、ログイン画面に遷移
+    if(user == null)
+    {
+      return new ModelAndView("redirect:/Login");
+    }
+    else
+    {
+      // ユーザ情報をオブジェクトに格納
+      mav.addObject("user", user);
+    }
+
     String message = (String) session.getAttribute("message");
     session.removeAttribute("message");
 
